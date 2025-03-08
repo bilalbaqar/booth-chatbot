@@ -7,7 +7,7 @@ from langchain.agents import AgentExecutor
 from dotenv import load_dotenv
 load_dotenv()
 
-from degree_requirements import degree_requirements_checker
+from tools.degree_requirements import degree_requirements_checker
 
 @tool
 def get_weather(location: str):

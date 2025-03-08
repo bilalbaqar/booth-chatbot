@@ -1,15 +1,9 @@
 from langchain_core.tools import tool
 from langchain_openai import ChatOpenAI
-from langchain.agents import create_react_agent
-from langchain import hub
-from langchain.agents import AgentExecutor
-from typing import Dict, List
 from langchain.prompts import PromptTemplate
-from langchain.tools import Tool
 from dotenv import load_dotenv
-import os
 
-from dotenv import load_dotenv
+# Load environment variables
 load_dotenv()
 
 # Initialize the language model
