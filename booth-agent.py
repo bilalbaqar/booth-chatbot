@@ -7,6 +7,8 @@ from langchain.agents import AgentExecutor
 from dotenv import load_dotenv
 load_dotenv()
 
+from degree_requirements import degree_requirements_checker
+
 @tool
 def get_weather(location: str):
     """Placeholder for getting weather."""
@@ -47,7 +49,7 @@ def course_planner(text: str):
 llm = ChatOpenAI(model="gpt-4o-mini")
 
 # Define the tools
-tools = [get_weather, calculate_length, bidding_question,  course_planner]
+tools = [get_weather, calculate_length, bidding_question, degree_requirements_checker]
 
 # Pull a ReAct prompt template
 prompt = hub.pull("hwchase17/react")
@@ -62,7 +64,7 @@ react_agent = create_react_agent(llm, tools, prompt)
 agent_executor = AgentExecutor(agent=react_agent, tools=tools)
 
 # Execute the agent with an input
-result = agent_executor.invoke({"input": "Which courses do I need to take to complete my degree requirements?"})
+result = agent_executor.invoke({"input": "What courses can I take to fulfill the Decisions requirement?"})
 
 print(result)
 
