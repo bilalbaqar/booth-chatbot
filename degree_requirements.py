@@ -58,9 +58,8 @@ COURSE_PLANNER_PROMPT = PromptTemplate.from_template(
 
     Provide a detailed response that:
     1. Directly answers the student's question
-    2. Lists specific course numbers and names that satisfy the requirements
-    3. Explains why these courses are recommended
-    4. Includes any relevant prerequisites or important notes
+    2. Lists specific course numbers that satisfy the requirements
+    3. Do not make up course names, only list course numbers
 
     Response:"""
 )
@@ -87,7 +86,9 @@ def degree_requirements_checker(text: str):
 # Example usage
 if __name__ == "__main__":
 
-    
+    print(degree_requirements_checker("What courses can I take to fulfill the Finance requirement?"))
+
+    exit()
     # Example queries to test the tool
     test_queries = [
         "What courses can I take to fulfill the Financial Accounting requirement?",
