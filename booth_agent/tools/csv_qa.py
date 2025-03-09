@@ -86,11 +86,24 @@ class CSVQuestionAnswerer:
 @tool
 def csv_question_answerer(question: str):
     """
-    A tool for querying structured CSV data using a language model.
-    
-    Example:
-    - "What is the course number for investments?"
-    - "What courses are available in Spring 2025?"
+    A tool for students at the Booth School of Business that provides insights into MBA course offerings, including schedules, faculty,
+    locations, and enrollment capacities. 
+
+    Capabilities:
+    - Retrieve Course Schedules: Find when and where a course is being offered.
+    - Identify Faculty Instructors: Get details about the professor teaching a course.
+    - Fetch Course Numbers & Sections: Look up course numbers and section details.
+    - Locate Classrooms: Identify the building and room for a given course.
+    - Check Enrollment Capacity: View current and maximum student enrollment.
+    - General Course Lookup: Answer questions such as:
+        - "What courses are offered in Winter 2025?"
+        - "Who is teaching Advanced Investments?"
+        - "What time is 35150 scheduled?"
+        - "Where is Financial Accounting being held?"
+        - "What is the maximum capacity for Operations Strategy?"
+
+    This tool is useful for anyone looking
+    for quick insights into the course schedule database.
     """
     try:
         # Path to CSV file

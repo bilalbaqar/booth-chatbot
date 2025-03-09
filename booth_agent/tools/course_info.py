@@ -14,10 +14,6 @@ import os
 # Load environment variables
 load_dotenv()
 
-
-llm_model = "gpt-4o-mini"
-
-
 file = os.path.abspath(r'..\data\all-course-list.csv')
 
 loader = CSVLoader(file_path=file)
@@ -28,7 +24,7 @@ index = VectorstoreIndexCreator(
 ).from_loaders([loader])
 
 query ="What is the course number for investments?"
-
+query = "Give me 5 courses that are offered in Spring 2025?"
 
 llm_replacement_model = OpenAI(temperature=0, 
                                model='gpt-3.5-turbo-instruct')
@@ -45,10 +41,10 @@ response = index.query(query,
                        llm = llm_replacement_model)
 
 display(Markdown(response))
+print(response)
 
 
-
-
+exit()
 
 
 # Initialize the language model

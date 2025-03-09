@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from tools.degree_requirements import degree_requirements_checker
+from tools.csv_qa import csv_question_answerer
 
 @tool
 def get_weather(location: str):
@@ -49,7 +50,7 @@ def course_planner(text: str):
 llm = ChatOpenAI(model="gpt-4o-mini")
 
 # Define the tools
-tools = [get_weather, calculate_length, bidding_question, degree_requirements_checker]
+tools = [get_weather, calculate_length, bidding_question, degree_requirements_checker, csv_question_answerer]
 
 # Pull a ReAct prompt template
 prompt = hub.pull("hwchase17/react")
@@ -64,7 +65,19 @@ react_agent = create_react_agent(llm, tools, prompt)
 agent_executor = AgentExecutor(agent=react_agent, tools=tools)
 
 # Execute the agent with an input
-result = agent_executor.invoke({"input": "What courses can I take to fulfill the Decisions requirement?"})
+#result = agent_executor.invoke({"input": "What courses can I take to fulfill the Decisions requirement?"})
 
-print(result)
+#print(result)
+
+test_queries = [
+    "What courses can I take to fulfill the Decisions requirement?",
+    "What is the course number for investments?",
+    "What are the course numbers for investments and financial accounting?",
+    "Give me 5 courses that are offered in Spring 2025?"
+]
+
+for query in test_queries:
+    print(f"\nQuery: {query}")
+    result = agent_executor.invoke({"input": query})
+    print(f"Response: {result}")
 
