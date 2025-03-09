@@ -9,6 +9,7 @@ load_dotenv()
 
 from tools.degree_requirements import degree_requirements_checker
 from tools.csv_qa import csv_question_answerer
+from tools.course_info import csv_vector_search
 
 @tool
 def get_weather(location: str):
@@ -28,29 +29,15 @@ def bidding_question(text: str):
     """Answer any questions related to bidding, bid points, course selection, etc."""
     return f"You can only take Microeconomics because that is the only course that is offered."
 
-@tool
-def course_planner(text: str):
-    """
-    A course planning tool for students at the Booth School of Business to help them plan their courses for the upcoming quarters.
-
-    This tool provides the following functionalities:
-    - Identifies which courses are being offered in the upcoming Fall, Winter, Spring, or Summer quarters.
-    - Helps students fulfill degree requirements by suggesting eligible courses.
-    - Assists in meeting concentration/specialization requirements by recommending relevant courses.
-    - Allows students to input preferences such as preferred instructors, class formats (in-person/online), 
-      and scheduling constraints.
-    - Ensures students stay on track for graduation by balancing core, elective, and specialization courses.
-    """
-    return f"Take Microeconomics, it will cover all your requirements."
-
-
-
 
 # Define the language model
 llm = ChatOpenAI(model="gpt-4o-mini")
 
+#course_tool = csv_question_answerer
+course_tool = csv_vector_search
+
 # Define the tools
-tools = [get_weather, calculate_length, bidding_question, degree_requirements_checker, csv_question_answerer]
+tools = [get_weather, calculate_length, bidding_question, degree_requirements_checker, course_tool]
 
 # Pull a ReAct prompt template
 prompt = hub.pull("hwchase17/react")
@@ -69,7 +56,7 @@ agent_executor = AgentExecutor(agent=react_agent, tools=tools)
 
 #print(result)
 
-test_queries = [
+""" test_queries = [
     "What courses can I take to fulfill the Decisions requirement?",
     "What is the course number for investments?",
     "What are the course numbers for investments and financial accounting?",
@@ -79,5 +66,24 @@ test_queries = [
 for query in test_queries:
     print(f"\nQuery: {query}")
     result = agent_executor.invoke({"input": query})
-    print(f"Response: {result}")
+    print(f"Response: {result}") """
 
+
+
+if __name__ == "__main__":
+    print("📘 CSV Course Query Assistant")
+    print("Type your questions about the course schedule. Type 'exit' to quit.\n")
+
+    while True:
+        # Get query input from the user
+        query = input("Enter your query: ")
+
+        # Exit condition
+        if query.lower() == "exit":
+            print("Exiting the tool. Have a great day! 👋")
+            break
+
+        result = agent_executor.invoke({"input": query})
+        print(f"\nQuery: {query}")
+        # Display the result
+        print(f"\nResponse: {result}\n")

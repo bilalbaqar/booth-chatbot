@@ -169,3 +169,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Self added
+data/
+deeplearning-notebooks/
+extra/
