@@ -9,6 +9,11 @@ import os
 # Load environment variables
 load_dotenv()
 
+# Initialize file paths at module level
+current_file = Path(__file__)
+BASE_DIR = current_file.parents[3]
+csv_file = BASE_DIR / "data" / "all-course-list.csv"
+
 # Initialize the language model
 llm = ChatOpenAI(
     temperature=0,
@@ -83,7 +88,9 @@ class CSVQuestionAnswerer:
         except Exception as e:
             return f"Error processing question: {str(e)}"
 
-# Define as a LangChain tool
+# Initialize the CSVQuestionAnswerer at module level
+qa = CSVQuestionAnswerer(csv_file)
+
 @tool
 def course_tool_context_search(question: str):
     """
@@ -107,13 +114,7 @@ def course_tool_context_search(question: str):
     for quick insights into the course schedule database.
     """
     try:
-        from pathlib import Path
-
-        # Get the absolute path of the current file
-        current_file = Path(__file__)
-        BASE_DIR = current_file.parents[3]
-        csv_file = BASE_DIR / "data" / "all-course-list.csv"
-        qa = CSVQuestionAnswerer(csv_file)
+        # Use the pre-initialized qa instance
         return qa.ask(question)
     except Exception as e:
         return f"Error processing request: {str(e)}"

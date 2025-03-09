@@ -9,8 +9,29 @@ from dotenv import load_dotenv
 from langchain.llms import OpenAI
 import os
 from pathlib import Path
+
 # Load environment variables
 load_dotenv()
+
+# Initialize file paths at module level
+current_file = Path(__file__)
+BASE_DIR = current_file.parents[3]
+csv_file = BASE_DIR / "data" / "all-course-list.csv"
+
+# Initialize CSV loader
+loader = CSVLoader(file_path=csv_file)
+
+# Create vector search index at module level
+index = VectorstoreIndexCreator(
+    vectorstore_cls=DocArrayInMemorySearch,
+    embedding=OpenAIEmbeddings()
+).from_loaders([loader])
+
+# Initialize LLM at module level
+llm = OpenAI(
+    temperature=0, 
+    model='gpt-3.5-turbo-instruct'
+)
 
 @tool
 def course_tool_vector_search(question: str):
@@ -35,33 +56,7 @@ def course_tool_vector_search(question: str):
     for quick insights into the course schedule database.
     """
     try:
-
-
-        current_file = Path(__file__)
-        BASE_DIR = current_file.parents[3]
-        csv_file = BASE_DIR / "data" / "all-course-list.csv"
-        loader = CSVLoader(file_path=csv_file)
-
-        # Create a vector search index
-        index = VectorstoreIndexCreator(
-            vectorstore_cls=DocArrayInMemorySearch,
-            embedding=OpenAIEmbeddings()
-        ).from_loaders([loader])
-
-        # Initialize LLM with retrieval model
-        """ llm = ChatOpenAI(
-            temperature=0,
-            model='gpt-4o-mini'
-        ) """
-        # Initialize LLM with retrieval model
-        llm = OpenAI(
-            temperature=0, 
-            model='gpt-3.5-turbo-instruct'
-        )
-
-
-
-        # Query the index
+        # Use the pre-initialized index and llm
         response = index.query(question, llm=llm)
         return response
 
