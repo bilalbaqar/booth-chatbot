@@ -8,8 +8,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from tools.degree_requirements import degree_requirements_checker
-from tools.course_csv_loaders.csv_qa import csv_question_answerer
-from tools.course_csv_loaders.course_info import csv_vector_search
+from tools.course_csv_loaders.course_loader_context import course_tool_context_search
+from tools.course_csv_loaders.course_loader_vector import course_tool_vector_search
 
 @tool
 def get_weather(location: str):
@@ -33,8 +33,8 @@ def bidding_question(text: str):
 # Define the language model
 llm = ChatOpenAI(model="gpt-4o-mini")
 
-#course_tool = csv_question_answerer
-course_tool = csv_vector_search
+course_tool = course_tool_context_search
+# course_tool = course_tool_vector_search
 
 # Define the tools
 tools = [degree_requirements_checker, course_tool]

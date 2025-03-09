@@ -13,7 +13,7 @@ from pathlib import Path
 load_dotenv()
 
 @tool
-def csv_vector_search(question: str):
+def course_tool_vector_search(question: str):
     """
     A tool for students at the Booth School of Business that provides insights into MBA course offerings, including schedules, faculty,
     locations, and enrollment capacities. 
@@ -85,7 +85,7 @@ if __name__ == "__main__":
 
     for query in test_queries:
         print(f"\nQuery: {query}")
-        print(f"Response: {csv_vector_search(query)}")
+        print(f"Response: {course_tool_vector_search(query)}")
 
 
 
