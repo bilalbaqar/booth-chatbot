@@ -2,6 +2,7 @@ from langchain_core.tools import tool
 from langchain_openai import ChatOpenAI
 from langchain.document_loaders.csv_loader import CSVLoader
 from langchain.prompts import PromptTemplate
+from pathlib import Path
 from dotenv import load_dotenv
 import os
 
@@ -106,8 +107,12 @@ def csv_question_answerer(question: str):
     for quick insights into the course schedule database.
     """
     try:
-        # Path to CSV file
-        csv_file = os.path.abspath(r'..\data\all-course-list.csv')
+        from pathlib import Path
+
+        # Get the absolute path of the current file
+        current_file = Path(__file__)
+        BASE_DIR = current_file.parents[3]
+        csv_file = BASE_DIR / "data" / "all-course-list.csv"
         qa = CSVQuestionAnswerer(csv_file)
         return qa.ask(question)
     except Exception as e:
@@ -120,8 +125,8 @@ if __name__ == "__main__":
         "What is the total number of records in the dataset?",
         "What are the column names in the dataset?",
         "What is the course number for investments?",
-        "What are the course numbers for investments and financial accounting?",
-        "What courses are offered in Spring 2025?"
+        "What are the course numbers for investments and financial accounting?"
+        #"What courses are offered in Spring 2025?"
     ]
     
     for query in test_queries:

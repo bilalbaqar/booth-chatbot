@@ -1,50 +1,3 @@
-""" from langchain_core.tools import tool
-from langchain.chains import RetrievalQA
-from langchain.chat_models import ChatOpenAI
-from langchain.document_loaders import CSVLoader
-from langchain.vectorstores import DocArrayInMemorySearch
-from IPython.display import display, Markdown
-from langchain.llms import OpenAI
-from langchain.embeddings.openai import OpenAIEmbeddings
-
-from langchain.indexes import VectorstoreIndexCreator
-
-from dotenv import load_dotenv
-import os
-# Load environment variables
-load_dotenv()
-
-file = os.path.abspath(r'..\data\all-course-list.csv')
-
-loader = CSVLoader(file_path=file)
-
-index = VectorstoreIndexCreator(
-    vectorstore_cls=DocArrayInMemorySearch,
-    embedding=OpenAIEmbeddings()
-).from_loaders([loader])
-
-query ="What is the course number for investments?"
-query = "Give me 5 courses that are offered in Spring 2025?"
-
-llm_replacement_model = OpenAI(temperature=0, 
-                               model='gpt-3.5-turbo-instruct')
-
-
-
-
-
-
-
-
-
-response = index.query(query, 
-                       llm = llm_replacement_model)
-
-display(Markdown(response))
-print(response) """
-
-
-
 from langchain_core.tools import tool
 from langchain.chains import RetrievalQA
 from langchain.chat_models import ChatOpenAI
@@ -55,7 +8,7 @@ from langchain.indexes import VectorstoreIndexCreator
 from dotenv import load_dotenv
 from langchain.llms import OpenAI
 import os
-
+from pathlib import Path
 # Load environment variables
 load_dotenv()
 
@@ -82,11 +35,12 @@ def csv_vector_search(question: str):
     for quick insights into the course schedule database.
     """
     try:
-        # Define the CSV file path
-        file = os.path.abspath(r'..\data\all-course-list.csv')
 
-        # Load the CSV data
-        loader = CSVLoader(file_path=file)
+
+        current_file = Path(__file__)
+        BASE_DIR = current_file.parents[3]
+        csv_file = BASE_DIR / "data" / "all-course-list.csv"
+        loader = CSVLoader(file_path=csv_file)
 
         # Create a vector search index
         index = VectorstoreIndexCreator(
@@ -132,3 +86,51 @@ if __name__ == "__main__":
     for query in test_queries:
         print(f"\nQuery: {query}")
         print(f"Response: {csv_vector_search(query)}")
+
+
+
+""" from langchain_core.tools import tool
+from langchain.chains import RetrievalQA
+from langchain.chat_models import ChatOpenAI
+from langchain.document_loaders import CSVLoader
+from langchain.vectorstores import DocArrayInMemorySearch
+from IPython.display import display, Markdown
+from langchain.llms import OpenAI
+from langchain.embeddings.openai import OpenAIEmbeddings
+
+from langchain.indexes import VectorstoreIndexCreator
+
+from dotenv import load_dotenv
+import os
+# Load environment variables
+load_dotenv()
+
+file = os.path.abspath(r'..\data\all-course-list.csv')
+
+loader = CSVLoader(file_path=file)
+
+index = VectorstoreIndexCreator(
+    vectorstore_cls=DocArrayInMemorySearch,
+    embedding=OpenAIEmbeddings()
+).from_loaders([loader])
+
+query ="What is the course number for investments?"
+query = "Give me 5 courses that are offered in Spring 2025?"
+
+llm_replacement_model = OpenAI(temperature=0, 
+                               model='gpt-3.5-turbo-instruct')
+
+
+
+
+
+
+
+
+
+response = index.query(query, 
+                       llm = llm_replacement_model)
+
+display(Markdown(response))
+print(response) """
+

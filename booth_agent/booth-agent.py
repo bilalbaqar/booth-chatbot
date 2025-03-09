@@ -8,8 +8,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from tools.degree_requirements import degree_requirements_checker
-from tools.csv_qa import csv_question_answerer
-from tools.course_info import csv_vector_search
+from tools.course_csv_loaders.csv_qa import csv_question_answerer
+from tools.course_csv_loaders.course_info import csv_vector_search
 
 @tool
 def get_weather(location: str):
@@ -37,7 +37,7 @@ llm = ChatOpenAI(model="gpt-4o-mini")
 course_tool = csv_vector_search
 
 # Define the tools
-tools = [get_weather, calculate_length, bidding_question, degree_requirements_checker, course_tool]
+tools = [degree_requirements_checker, course_tool]
 
 # Pull a ReAct prompt template
 prompt = hub.pull("hwchase17/react")
@@ -56,21 +56,26 @@ agent_executor = AgentExecutor(agent=react_agent, tools=tools)
 
 #print(result)
 
-""" test_queries = [
-    "What courses can I take to fulfill the Decisions requirement?",
-    "What is the course number for investments?",
-    "What are the course numbers for investments and financial accounting?",
-    "Give me 5 courses that are offered in Spring 2025?"
-]
 
-for query in test_queries:
-    print(f"\nQuery: {query}")
-    result = agent_executor.invoke({"input": query})
-    print(f"Response: {result}") """
 
 
 
 if __name__ == "__main__":
+    test_queries = [
+        "What courses can I take to fulfill the Decisions requirement?",
+        "What is the course number for investments?",
+        "What are the course numbers for investments and financial accounting?",
+        "Give me 5 courses that are offered in Spring 2025?"
+    ]
+
+    for query in test_queries:
+        print(f"\nQuery: {query}")
+        result = agent_executor.invoke({"input": query})
+        print(f"Response: {result}")
+    
+    exit()
+
+
     print("📘 CSV Course Query Assistant")
     print("Type your questions about the course schedule. Type 'exit' to quit.\n")
 
