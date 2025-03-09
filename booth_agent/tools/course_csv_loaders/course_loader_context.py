@@ -5,14 +5,13 @@ from langchain.prompts import PromptTemplate
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+from tools.course_csv_loaders.course_csv_loader_utils import get_csv_file_path
 
 # Load environment variables
 load_dotenv()
 
 # Initialize file paths at module level
-current_file = Path(__file__)
-BASE_DIR = current_file.parents[3]
-csv_file = BASE_DIR / "data" / "all-course-list.csv"
+csv_file = get_csv_file_path()
 
 # Initialize the language model
 llm = ChatOpenAI(

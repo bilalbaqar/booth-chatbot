@@ -9,14 +9,12 @@ from dotenv import load_dotenv
 from langchain.llms import OpenAI
 import os
 from pathlib import Path
+from tools.course_csv_loaders.course_csv_loader_utils import get_csv_file_path
 
 # Load environment variables
 load_dotenv()
 
-# Initialize file paths at module level
-current_file = Path(__file__)
-BASE_DIR = current_file.parents[3]
-csv_file = BASE_DIR / "data" / "all-course-list.csv"
+csv_file = get_csv_file_path()
 
 # Initialize CSV loader
 loader = CSVLoader(file_path=csv_file)
