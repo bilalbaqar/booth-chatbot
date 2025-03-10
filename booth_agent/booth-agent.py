@@ -10,6 +10,8 @@ load_dotenv()
 from tools.degree_requirements import degree_requirements_checker
 from tools.course_csv_loaders.course_loader_context import course_tool_context_search
 from tools.course_csv_loaders.course_loader_vector import course_tool_vector_search
+from tools.course_csv_loaders.course_name_finder import course_to_title
+from prompts.react_prompt import REACT_PROMPT
 
 @tool
 def get_weather(location: str):
@@ -33,39 +35,25 @@ def bidding_question(text: str):
 # Define the language model
 llm = ChatOpenAI(model="gpt-4o-mini")
 
-course_tool = course_tool_context_search
-# course_tool = course_tool_vector_search
+# course_tool = course_tool_context_search
+course_tool = course_tool_vector_search
 
 # Define the tools
-tools = [degree_requirements_checker, course_tool]
+tools = [degree_requirements_checker, course_tool, course_to_title]
 
-# Pull a ReAct prompt template
-prompt = hub.pull("hwchase17/react")
-
-# Create the ReAct agent
-react_agent = create_react_agent(llm, tools, prompt)
-
-
-
+# Create the ReAct agent using the imported prompt
+react_agent = create_react_agent(llm, tools, REACT_PROMPT)
 
 # Create an executor for the agent
-agent_executor = AgentExecutor(agent=react_agent, tools=tools)
-
-# Execute the agent with an input
-#result = agent_executor.invoke({"input": "What courses can I take to fulfill the Decisions requirement?"})
-
-#print(result)
-
-
-
-
+agent_executor = AgentExecutor(agent=react_agent, tools=tools, verbose=True)
 
 if __name__ == "__main__":
     test_queries = [
+        "What is the title for 35150?",
         "What courses can I take to fulfill the Decisions requirement?",
         "What is the course number for investments?",
-        "What are the course numbers for investments and financial accounting?",
-        "Give me 5 courses that are offered in Spring 2025?"
+        "What are the course numbers for investments and financial accounting?"
+        #"Give me 5 courses that are offered in Spring 2025?"
     ]
 
     for query in test_queries:
