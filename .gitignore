@@ -174,3 +174,7 @@ cython_debug/
 data/
 deeplearning-notebooks/
 extra/
+
+
+index.faiss
+index.pkl

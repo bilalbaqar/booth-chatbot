@@ -10,11 +10,15 @@ from langchain.agents.output_parsers import ReActSingleInputOutputParser
 from dotenv import load_dotenv
 load_dotenv()
 
+import os
+os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
+
 from tools.degree_requirements import degree_requirements_checker
 from tools.concentration_requirements import concentration_requirements_checker
 from tools.course_csv_loaders.course_loader_context import course_tool_context_search
 from tools.course_csv_loaders.course_loader_vector import course_tool_vector_search
 from tools.course_csv_loaders.course_name_finder import course_to_title
+from tools.syllabus_loader.syllabus_tool import syllabus_qa
 from prompts.react_prompt import REACT_PROMPT
 
 @tool
@@ -43,7 +47,13 @@ llm = ChatOpenAI(model="gpt-4o-mini")
 course_tool = course_tool_vector_search
 
 # Define the tools
-tools = [degree_requirements_checker, concentration_requirements_checker, course_tool, course_to_title]
+tools = [
+    degree_requirements_checker, 
+    concentration_requirements_checker, 
+    course_tool, 
+    course_to_title,
+    syllabus_qa
+]
 
 # Initialize memory with return_messages=True to get structured message objects
 memory = ConversationBufferMemory(
@@ -90,20 +100,21 @@ if __name__ == "__main__":
             result = agent_executor.invoke({"input": query})
             print(f"\nQuery: {query}")
             # Display the result
-            print(f"\nResponse: {result}\n")
+            print(f"\nResponse: {result['output']}\n")
     else:
         test_queries = [
             "What is the title for 35150?",
             "Does 30131 fulfill requirements for Accounting concentration?",
             "What courses can I take to fulfill the Decisions requirement?",
             "What is the course number for investments?",
-            "What are the course numbers for investments and financial accounting?"
+            "What are the course numbers for investments and financial accounting?",
+            "What are the prerequisites for Advanced Investments?"
         ]
 
         for query in test_queries:
             print(f"\nQuery: {query}")
             result = agent_executor.invoke({"input": query})
-            print(f"Response: {result}")
+            print(f"Response: {result['output']}")
 
 
     
