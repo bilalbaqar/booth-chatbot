@@ -5,9 +5,13 @@ REACT_PROMPT = PromptTemplate.from_template(
 
     {tools}
 
+    Previous conversation history:
+    {chat_history}
+
+    Current question: {input}
+
     Use the following format:
 
-    Question: the input question you must answer
     Thought: you should always think about what to do
     Action: the action to take, should be one of [{tool_names}]
     Action Input: the input to the action
@@ -17,19 +21,19 @@ REACT_PROMPT = PromptTemplate.from_template(
     Final Answer: the final answer to the original input question
 
     Important: 
-    1. Always start with "Question: " followed by the input
-    2. Each Thought/Action/Action Input/Observation must be on a new line
-    3. The Final Answer must be on a new line starting with "Final Answer: "
-    4. Do not combine multiple actions in one step
-    5. Make sure to include all required fields in the correct order
+    1. Each Thought/Action/Action Input/Observation must be on a new line
+    2. The Final Answer must be on a new line starting with "Final Answer: "
+    3. Do not combine multiple actions in one step
+    4. Make sure to include all required fields in the correct order
+    5. Use the chat history to understand context and previous information
 
     Additional Instructions:
-    - If course numbers are found in the response, run the **course_to_title** tool for each course number.
-    - When responding with the final answer, include both the course title and its corresponding course number.
-
+    - If course numbers are found in the response, run the **course_to_title** tool for each course number
+    - When responding with the final answer, include both the course title and its corresponding course number
+    - Use the conversation history to provide more context-aware responses and avoid repeating information
+    - If a course number was mentioned in previous messages, use that information
 
     Begin!
 
-    Question: {input}
     Thought: {agent_scratchpad}"""
 ) 
