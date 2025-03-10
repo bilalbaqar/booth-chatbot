@@ -48,35 +48,38 @@ react_agent = create_react_agent(llm, tools, REACT_PROMPT)
 agent_executor = AgentExecutor(agent=react_agent, tools=tools, verbose=True)
 
 if __name__ == "__main__":
-    test_queries = [
-        "What is the title for 35150?",
-        "What courses can I take to fulfill the Decisions requirement?",
-        "What is the course number for investments?",
-        "What are the course numbers for investments and financial accounting?"
-        #"Give me 5 courses that are offered in Spring 2025?"
-    ]
+    decision = input("Do you want to ask questions? (y/n)")
 
-    for query in test_queries:
-        print(f"\nQuery: {query}")
-        result = agent_executor.invoke({"input": query})
-        print(f"Response: {result}")
+    if decision.lower() == "y":
+            print("📘 CSV Course Query Assistant")
+            print("Type your questions about the course schedule. Type 'exit' to quit.\n")
+
+            while True:
+                # Get query input from the user
+                query = input("Enter your query: ")
+
+                # Exit condition
+                if query.lower() == "exit":
+                    print("Exiting the tool. Have a great day! 👋")
+                    break
+
+                result = agent_executor.invoke({"input": query})
+                print(f"\nQuery: {query}")
+                # Display the result
+                print(f"\nResponse: {result}\n")
+    else:
+        test_queries = [
+            "What is the title for 35150?",
+            "What courses can I take to fulfill the Decisions requirement?",
+            "What is the course number for investments?",
+            "What are the course numbers for investments and financial accounting?"
+            #"Give me 5 courses that are offered in Spring 2025?"
+        ]
+
+        for query in test_queries:
+            print(f"\nQuery: {query}")
+            result = agent_executor.invoke({"input": query})
+            print(f"Response: {result}")
+
+
     
-    exit()
-
-
-    print("📘 CSV Course Query Assistant")
-    print("Type your questions about the course schedule. Type 'exit' to quit.\n")
-
-    while True:
-        # Get query input from the user
-        query = input("Enter your query: ")
-
-        # Exit condition
-        if query.lower() == "exit":
-            print("Exiting the tool. Have a great day! 👋")
-            break
-
-        result = agent_executor.invoke({"input": query})
-        print(f"\nQuery: {query}")
-        # Display the result
-        print(f"\nResponse: {result}\n")
