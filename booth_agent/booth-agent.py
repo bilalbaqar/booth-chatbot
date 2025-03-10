@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from tools.degree_requirements import degree_requirements_checker
+from tools.concentration_requirements import concentration_requirements_checker
 from tools.course_csv_loaders.course_loader_context import course_tool_context_search
 from tools.course_csv_loaders.course_loader_vector import course_tool_vector_search
 from tools.course_csv_loaders.course_name_finder import course_to_title
@@ -39,7 +40,7 @@ llm = ChatOpenAI(model="gpt-4o-mini")
 course_tool = course_tool_vector_search
 
 # Define the tools
-tools = [degree_requirements_checker, course_tool, course_to_title]
+tools = [degree_requirements_checker, concentration_requirements_checker, course_tool, course_to_title]
 
 # Create the ReAct agent using the imported prompt
 react_agent = create_react_agent(llm, tools, REACT_PROMPT)
@@ -70,6 +71,7 @@ if __name__ == "__main__":
     else:
         test_queries = [
             "What is the title for 35150?",
+            "Does 30131 fulfill requirements for Accounting concentration?",
             "What courses can I take to fulfill the Decisions requirement?",
             "What is the course number for investments?",
             "What are the course numbers for investments and financial accounting?"
