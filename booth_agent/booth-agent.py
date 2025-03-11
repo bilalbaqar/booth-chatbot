@@ -7,6 +7,7 @@ from langchain.memory import ConversationBufferMemory
 from langchain.agents.format_scratchpad import format_log_to_str
 from langchain.agents.output_parsers import ReActSingleInputOutputParser
 from flask import Flask, request, jsonify
+from langchain.callbacks.base import BaseCallbackHandler
 from flask_cors import CORS
 import argparse
 
@@ -57,6 +58,21 @@ react_agent = create_react_agent(
     output_parser=ReActSingleInputOutputParser()
 )
 
+class CaptureThinkingCallback(BaseCallbackHandler):
+    def __init__(self):
+        self.thinking_steps = []
+
+    def on_chain_start(self, serialized, inputs, **kwargs):
+        self.thinking_steps.append(f"Starting new invocation with input: {inputs}")
+
+    def on_agent_action(self, action, **kwargs):
+        self.thinking_steps.append(f"Agent is thinking: {action}")
+
+    def on_agent_finish(self, finish, **kwargs):
+        self.thinking_steps.append(f"Final agent response: {finish}")
+
+thinking_callback = CaptureThinkingCallback()
+
 # Create an executor for the agent with memory
 agent_executor = AgentExecutor(
     agent=react_agent,
@@ -64,8 +80,12 @@ agent_executor = AgentExecutor(
     memory=memory,
     verbose=True,
     handle_parsing_errors=True,
-    max_iterations=5  # Limit the number of iterations to prevent infinite loops
+    max_iterations=20,  # Limit the number of iterations to prevent infinite loops
+    callbacks=[thinking_callback]
 )
+
+
+
 
 @app.route('/api/query', methods=['POST'])
 def handle_query():
@@ -89,10 +109,11 @@ def handle_query():
 
         query = data['query']
         result = agent_executor.invoke({"input": query})
-        
+        bot_thinking = "\n".join(thinking_callback.thinking_steps)
         return jsonify({
             'query': query,
-            'response': result['output']
+            'response': result['output'],
+            'bot_thinking': bot_thinking
         })
 
     except Exception as e:
