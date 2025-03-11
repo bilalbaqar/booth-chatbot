@@ -163,9 +163,12 @@ def run_cli():
 def run_tests():
     """Run predefined test queries to verify agent functionality."""
     test_queries = [
-        "What is the title for 35150?", # Testing course_to_title
-        "Does 30131 fulfill requirements for Accounting concentration?", # Testing concentration_requirements_checker
         "What courses can I take to fulfill the Decisions requirement?", # Testing degree_requirements_checker
+        "Does 30131 fulfill requirements for Accounting concentration?", # Testing concentration_requirements_checker
+        "When is investments offered next?", # Testing course_tool_vector_search
+        "What are the bid points for 34106?", # Testing bid_history_qa
+        "What do we learn in 34106?", # Testing syllabus_qa
+        "What is the title for 35150?", # Testing course_to_title # Testing degree_requirements_checker
         "What is the course number for investments?", # Testing course_tool_vector_search
         "What are the course numbers for investments and financial accounting?", # Testing course_tool_vector_search
         "What are the prerequisites for Advanced Investments?" # Testing syllabus_qa

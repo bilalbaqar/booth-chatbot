@@ -151,4 +151,29 @@ with st.expander('About this Assistant'):
     - Concentration requirements
     - Course bidding history
     - Course syllabi
+    
+    Example questions you can ask:
+    1. Degree Requirements:
+       - "What courses can I take to fulfill the Decisions requirement?"
+       - "What are the core course requirements?"
+    
+    2. Concentration Requirements:
+       - "Does 30131 fulfill requirements for Accounting concentration?"
+       - "What courses count towards Finance concentration?"
+    
+    3. Course Information:
+       - "When is investments offered next?"
+       - "What courses are offered on Monday evenings in Spring 2025?"
+    
+    4. Bidding History:
+       - "What are the bid points for 34106?"
+       - "How many points do I need for Investments?"
+    
+    5. Course Syllabi:
+       - "What are the prerequisites for Advanced Investments?"
+       - "What is the grading policy for Negotiations?"
+       - "What do we learn in 34106?"
+             
+    6. Course Number to Title:
+       - "What is the title for 35150?"
     """)
