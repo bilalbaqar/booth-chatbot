@@ -150,7 +150,7 @@ if __name__ == "__main__":
     # Test the direct tool
     print("\nTesting direct bid history lookup:")
     print(bid_history_by_course_number("37202"))
-    print(bid_history_by_course_number("Pricing Strategies"))
+    #print(bid_history_by_course_number("Pricing Strategies"))
     
     # Test the QA interface
     print("\nTesting bid history QA:")

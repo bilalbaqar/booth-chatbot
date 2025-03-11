@@ -19,21 +19,20 @@ from tools.course_csv_loaders.course_loader_context import course_tool_context_s
 from tools.course_csv_loaders.course_loader_vector import course_tool_vector_search
 from tools.course_csv_loaders.course_name_finder import course_to_title
 from tools.syllabus_loader.syllabus_tool import syllabus_qa
+from tools.bidding_loader.bidding_tool import bid_history_qa
 from prompts.react_prompt import REACT_PROMPT
 
 # Define the language model
 llm = ChatOpenAI(model="gpt-4o-mini")
 
-# course_tool = course_tool_context_search
-course_tool = course_tool_vector_search
-
 # Define the tools
 tools = [
     degree_requirements_checker, 
     concentration_requirements_checker, 
-    course_tool, 
+    course_tool_vector_search, 
     course_to_title,
-    syllabus_qa
+    syllabus_qa,
+    bid_history_qa
 ]
 
 # Initialize memory with return_messages=True to get structured message objects
