@@ -72,6 +72,7 @@ def bid_history_by_course_number(course_number: str) -> str:
         output += f"\n  Phase 2: {row['Phase 2 Price']} points"
         output += f"\n  Phase 3: {row['Phase 3 Price']} points" if not pd.isna(row['Phase 3 Price']) else "\n  Phase 3: No data"
     
+    print(output)
     return output
 
 REACT_PROMPT = PromptTemplate.from_template(
@@ -107,7 +108,10 @@ REACT_PROMPT = PromptTemplate.from_template(
        - Provide specific bid point ranges for each phase
        - Mention any recent trends
        - Note if the course typically requires points or is usually available without points
-       
+
+
+    4. You will not make up any information. You will only use the information provided by the bid_history_by_course_number tool.
+
     Begin!
     
     Thought: {agent_scratchpad}"""
