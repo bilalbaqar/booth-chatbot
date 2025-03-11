@@ -6,7 +6,7 @@ This directory contains the data files used by the Booth Course Assistant Chatbo
 
 ### `bidding-history.csv`
 - **Purpose**: Contains historical bidding data for Booth courses
-- **Format**: CSV (Comma Separated Values)
+- **Format**: CSV
 - **Columns**:
   - `Course_Original`: Original course identifier (e.g., "30000-81")
   - `Course_Number`: Base course number (e.g., "30000")
@@ -21,21 +21,24 @@ This directory contains the data files used by the Booth Course Assistant Chatbo
   - `Phase 3 Price`: Clearing price in Phase 3 bidding
   - Additional enrollment and pricing details for different phases
 
-### `course-info.csv`
+### `all-course-list.csv`
 - **Purpose**: Contains detailed information about Booth courses
 - **Format**: CSV
 - **Columns**:
-  - Course number and section
-  - Course title
-  - Course description
-  - Prerequisites
-  - Credit hours
-  - Professor information
-  - Other course-specific details
+  - `Quarter`: Academic quarter
+  - `Title`: Course title
+  - `Course`: Course number
+  - `Section`: Section identifier
+  - `Program`: Program type
+  - `Faculty`: Course instructor
+  - `Schedule`: Class timing
+  - `Capacity`: Maximum enrollment
+  - `Building`: Building name
+  - `Location`: Room location
 
 ### `syllabus\*_syllabus.pdf`
 - **Purpose**: Contains syllabus of Booth courses
-- **Format**: pdf
+- **Format**: PDF
 
 ## Data Updates
 
@@ -54,15 +57,3 @@ These files are used by various components of the chatbot:
 - All data is anonymized and contains no personal student information
 - Bidding data is aggregated by course and section
 - Course information is publicly available through Booth's course catalog
-
-## Contributing
-
-When updating data files:
-1. Maintain the existing file format and column structure
-2. Update the corresponding timestamp or version information
-3. Verify data integrity before committing changes
-4. Document any structural changes in this README
-
-## Note
-
-Please ensure all data files are properly formatted and validated before use in the production environment. 
