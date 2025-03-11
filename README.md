@@ -74,7 +74,11 @@ OPENAI_API_KEY=your_api_key_here
 
 1. Clone the repository:
 ```bash
-git clone [repository-url]
+git clone git@github.com:bilalbaqar/booth-chatbot.git
+
+# If you dont want to use ssh to clone
+# git clone https://github.com/bilalbaqar/booth-chatbot.git
+
 cd booth-chatbot
 ```
 
@@ -93,7 +97,7 @@ pip install -r requirements.txt
 #### Option B: Using venv
 ```bash
 # Create and activate virtual environment
-python -m venv venv
+python3.12 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install dependencies
@@ -122,14 +126,12 @@ Note: Replace `your_api_key_here` with your actual OpenAI API key. You can get a
 
 1. Start the backend server:
 ```bash
-cd booth_agent
-python booth-agent.py --server
+python .\booth_agent\booth-agent.py --server --server
 ```
 
 2. Start the frontend interface (in a new terminal):
 ```bash
-cd frontend
-streamlit run chatbot-frontend.py
+streamlit run frontend\chatbot-frontend.py
 ```
 
 The application will be available at:
@@ -166,16 +168,3 @@ python booth-agent.py --help
 - `DocArrayInMemorySearch`: For vector search capabilities
 - `CSVLoader`: For data loading and processing
 - `OpenAIEmbeddings`: For text embeddings
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
-
-## License
-
-[Add your license information here]
-
