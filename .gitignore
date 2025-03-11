@@ -175,6 +175,6 @@ data/
 deeplearning-notebooks/
 extra/
 
-
+llm_faiss_index/
 index.faiss
 index.pkl
