@@ -2,13 +2,35 @@ import streamlit as st
 import requests
 import json
 from datetime import datetime
+import os
+from PIL import Image
+
+# Display the logo
+try:
+    logo_path = os.path.join(os.path.dirname(__file__), "assets", "chicago-booth_logo.jpg")
+    st.markdown(
+        """
+        <style>
+        .full-width-container img {
+            width: 100% !important;
+            height: auto;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    # Display the logo using full width
+    st.image(logo_path, use_container_width=True, output_format="auto")
+except Exception as e:
+    st.warning(f"Logo not found. Please ensure 'chicago-booth_logo.jpg' is in the frontend/assets directory.")
+
+# Set the title using StreamLit
+st.title('Booth Course Assistant')
 
 # Initialize session state for chat history if it doesn't exist
 if 'chat_history' not in st.session_state:
     st.session_state.chat_history = []
-
-# Set the title using StreamLit
-st.title('Booth Course Assistant')
 
 # Display chat history
 st.write('### Chat History')

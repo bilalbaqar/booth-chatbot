@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="frontend/assets/chicago-booth_logo.jpg" alt="Chicago Booth Logo" width="600"/>
+</div>
+
 # Booth Course Assistant Chatbot
 
 A comprehensive chatbot designed to help Booth School of Business students with course-related queries, including course information, bidding history, and degree requirements.

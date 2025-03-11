@@ -28,8 +28,10 @@ REACT_PROMPT = PromptTemplate.from_template(
     5. Use the chat history to understand context and previous information
 
     Additional Instructions:
+    - If query is a phrase like "hello" or "hi", just respond with a greeting as Final Answer. 
     - If course numbers are found in the response, run the **course_to_title** tool for each course number
-    - When responding with the final answer, include both the course title and its corresponding course number
+    - When responding with the final answer, try to include both the course title and its corresponding course number
+    - If **course_to_title** does not return a course title then just return the course number
     - Use the conversation history to provide more context-aware responses and avoid repeating information
     - If a course number was mentioned in previous messages, use that information
 

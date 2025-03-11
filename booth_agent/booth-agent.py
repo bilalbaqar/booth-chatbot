@@ -87,7 +87,7 @@ def setup_agent():
         memory=memory,
         verbose=True,
         handle_parsing_errors=True,
-        max_iterations=20,
+        max_iterations=50,
         callbacks=[thinking_callback]
     )
 
@@ -178,6 +178,8 @@ def run_tests():
 
 def run_server():
     """Run the Flask server with the specified configuration."""
+    # Initialize the agent to reduce cold start time
+    result = agent_executor.invoke({"input": "hi"})
     app.run(host='0.0.0.0', port=5000, debug=True)
 
 if __name__ == "__main__":
