@@ -21,25 +21,6 @@ from tools.course_csv_loaders.course_name_finder import course_to_title
 from tools.syllabus_loader.syllabus_tool import syllabus_qa
 from prompts.react_prompt import REACT_PROMPT
 
-@tool
-def get_weather(location: str):
-    """Placeholder for getting weather."""
-    if "San Francisco" in location:
-        return "It's sunny in San Francisco."
-    else:
-        return f"Unknown weather in {location}"
-
-@tool
-def calculate_length(text: str):
-    """Calculate the length of a given text."""
-    return f"The text has {len(text)} characters."
-
-@tool
-def bidding_question(text: str):
-    """Answer any questions related to bidding, bid points, course selection, etc."""
-    return f"You can only take Microeconomics because that is the only course that is offered."
-
-
 # Define the language model
 llm = ChatOpenAI(model="gpt-4o-mini")
 
